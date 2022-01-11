@@ -1,0 +1,9 @@
+---
+- name: Install
+  hosts: web
+  remote_user: alarm
+
+  tasks:
+  - name: Install git
+    pacman: name=git update_cache=yes
+...
