@@ -1,0 +1,14 @@
+---
+- name: Install
+  hosts: web
+  remote_user: root
+  vars: 
+    db_name: wp_db
+    db_user: wp_user
+    db_pass: 
+
+  roles:
+    - utils
+    - docker
+    - firewall
+...

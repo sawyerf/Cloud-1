@@ -1,0 +1,44 @@
+---
+- name: Create Network
+  community.docker.docker_network:
+    name: wordpress
+
+- name: Deploy Wordpress
+  community.docker.docker_container:
+    name: wordpress
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    networks:
+      - name: wordpress
+    env:
+      WORDPRESS_DB_HOST: 'db'
+      WORDPRESS_DB_NAME: '{{ db_name }}'
+      WORDPRESS_DB_USER: '{{ db_user }}'
+      WORDPRESS_DB_PASSWORD: '{{ db_pass }}'
+
+- name: Deploy MYSQL
+  community.docker.docker_container:
+    name: db
+    image: mysql:latest
+    networks:
+      - name: wordpress
+    env:
+      MYSQL_DATABASE: '{{ db_name }}'
+      MYSQL_USER: '{{ db_user }}'
+      MYSQL_PASSWORD: '{{ db_pass }}'
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    restart_policy: always
+
+- name: Deploy PHPMyAdmin
+  community.docker.docker_container:
+    name: PHPMyAdmin
+    image: phpmyadmin
+    ports:
+      - 8081:80
+    networks:
+      - name: wordpress
+    env:
+      PMA_HOST: db
+#      PMA_USER: '{{ db_user }}'
+#      PMA_PASSWORD: '{{ db_pass }}'
