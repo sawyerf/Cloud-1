@@ -1,0 +1,21 @@
+server {
+	listen 80;
+	server_name _;
+
+	return 403;
+}
+
+server {
+	listen 80;
+	server_name cloud.local;
+
+	location / {
+		proxy_pass http://localhost:8080/;
+	}
+	location /adminator {
+		return 301 /adminator/;
+	}
+	location /adminator/ {
+		proxy_pass http://localhost:8081/;
+	}
+}

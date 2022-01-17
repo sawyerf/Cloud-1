@@ -5,10 +5,10 @@
   vars: 
     db_name: wp_db
     db_user: wp_user
-    db_pass: 
+    db_pass: pass
 
   roles:
-    - utils
+    # - utils
     - docker
     - firewall
 ...

@@ -40,5 +40,33 @@
       - name: wordpress
     env:
       PMA_HOST: db
-#      PMA_USER: '{{ db_user }}'
-#      PMA_PASSWORD: '{{ db_pass }}'
+      PMA_USER: '{{ db_user }}'
+      PMA_PASSWORD: '{{ db_pass }}'
+
+- name: Stop Service Nginx
+  service:
+    name: nginx
+    state: stopped
+    enabled: no
+
+- name: Copy Configuration file Nginx
+  template:
+    src: templates/site.conf.j2
+    # dest: /root/site.conf
+    dest: /etc/nginx/sites-enabled/default
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+
+# - name: Deploy Nginx
+#   community.docker.docker_container:
+#     name: Nginx
+#     image: nginx
+#     ports:
+#       - 80:80
+#     networks:
+#       - name: wordpress
+#     volumes:
+#       - '/root/site.conf:/etc/nginx/conf.d/default.conf'
