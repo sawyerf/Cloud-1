@@ -6,4 +6,13 @@
 ```
 docker build -t nginx-site .
 docker run -d -p 80:80 nginx-site
+docker exec -it <id> bash
+```
+
+```
+docker stop $(docker ps -q)
+```
+
+```
+ansible-playbook playbook.yml -i hosts
 ```
