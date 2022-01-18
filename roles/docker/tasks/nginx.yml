@@ -1,0 +1,51 @@
+---
+- name: Stop Service Nginx
+  service:
+    name: nginx
+    state: stopped
+    enabled: no
+
+- name: Create Folder Nginx
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop:
+    - '/root/{{ ngx_name }}/'
+
+- name: Copy Configuration file Nginx
+  template:
+    src: templates/site.conf.j2
+    dest: '/root/{{ ngx_name }}/site.conf'
+
+- name: Generate Private key
+  openssl_privatekey: 
+    path: '/root/{{ ngx_name }}/{{ domain }}.key'
+
+- name: Generate CSR
+  openssl_csr: 
+   path: '/root/{{ ngx_name }}/{{ domain }}.csr'
+   privatekey_path: '/root/{{ ngx_name }}/{{ domain }}.key'
+   common_name: '{{ domain }}'
+   country_name: FR
+
+- name: Generate a self signed certificate
+  openssl_certificate:
+   csr_path: '/root/{{ ngx_name }}/{{ domain }}.csr'
+   path: '/root/{{ ngx_name }}/{{ domain }}.crt'
+   privatekey_path: '/root/{{ ngx_name }}/{{ domain }}.key'
+   provider: selfsigned
+
+- name: Deploy Nginx
+  community.docker.docker_container:
+    name: '{{ ngx_name }}'
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - name: '{{ network_name }}'
+    volumes:
+      - '/root/{{ ngx_name }}/site.conf:/etc/nginx/conf.d/default.conf'
+      - '/root/{{ ngx_name }}/{{ domain }}.key:/etc/nginx/{{ domain }}.key'
+      - '/root/{{ ngx_name }}/{{ domain }}.crt:/etc/nginx/{{ domain }}.crt'
+    restart_policy: always

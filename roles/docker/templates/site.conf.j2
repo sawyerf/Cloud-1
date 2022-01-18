@@ -7,7 +7,18 @@ server {
 
 server {
 	listen 80;
-	server_name {{ host }};
+	server_name {{ domain }};
+
+	return 301 https://$host$request_uri;
+}
+
+server {
+	listen 443;
+	server_name {{ domain }};
+	ssl on;
+	ssl_certificate /etc/nginx/{{ domain }}.crt;
+	ssl_certificate_key /etc/nginx/{{ domain }}.key;
+	ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
 
 	location / {
 		proxy_pass http://{{ wp_name }}/;
@@ -20,11 +31,4 @@ server {
 		proxy_pass http://{{ pma_name }}/;
 		proxy_set_header Host $server_name;
 	}
-}
-
-server {
-	listen 443;
-	server_name _;
-
-	return 301 http://$host$request_uri;
 }

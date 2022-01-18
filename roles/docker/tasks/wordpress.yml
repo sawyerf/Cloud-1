@@ -1,0 +1,24 @@
+---
+- name: Create Folder MySQL
+  file:
+    path: '{{ item }}'
+    state: directory
+  loop:
+    - '/root/{{ wp_name }}/config'
+
+- name: Deploy Wordpress
+  community.docker.docker_container:
+    name: '{{ wp_name }}'
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    networks:
+      - name: '{{ network_name }}'
+    env:
+      WORDPRESS_DB_HOST: '{{ sql_name }}'
+      WORDPRESS_DB_NAME: '{{ db_name }}'
+      WORDPRESS_DB_USER: '{{ db_user }}'
+      WORDPRESS_DB_PASSWORD: '{{ db_pass }}'
+    volumes:
+      - '/root/{{ wp_name }}/:/var/www/html/'
+    restart_policy: always

@@ -7,10 +7,11 @@
     db_user: wp_user
     db_pass: pass
 
-    host: cloud.local
+    domain: cloud.local
     wp_name: Wordpress
     pma_name: PHPMyAdmin
-    ddb_name: DB
+    sql_name: MySQL
+    ngx_name: Nginx
     network_name: nw_default
 
   roles:

@@ -14,7 +14,8 @@
       'git',
       'docker-ce', 'docker-ce-cli', 'containerd.io', 
       'python3-pip',
-      'ufw'
+      'ufw',
+      'openssl'
     ]
     update_cache: yes
 - name: Install Python Docker
