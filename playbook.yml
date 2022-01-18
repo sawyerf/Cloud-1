@@ -16,6 +16,6 @@
 
   roles:
     # - utils
-    - docker
+    # - docker
     - firewall
 ...

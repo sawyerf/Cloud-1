@@ -1,2 +1,34 @@
 ---
-# - name: Set Firewall
+- name: Enabled UFW
+  ufw:
+    state: enabled
+    policy: allow
+
+- name: Deny Incoming
+  ufw:
+    rule: deny
+    direction: in
+
+- name: Deny Incoming
+  ufw:
+    rule: allow
+    direction: out
+
+- name: Allow SSH
+  ufw:
+    rule: allow
+    port: '22'
+    proto: tcp
+
+- name: Allow HTTPS
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+
+- name: Allow HTTPS
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
