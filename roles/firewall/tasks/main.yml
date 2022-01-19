@@ -2,33 +2,24 @@
 - name: Enabled UFW
   ufw:
     state: enabled
+    # policy: allow
+
+- name: Deny Incoming
+  ufw:
+    direction: incoming
+    policy: deny
+
+- name: Allow Outgoing
+  ufw:
+    direction: outgoing
     policy: allow
 
-- name: Deny Incoming
-  ufw:
-    rule: deny
-    direction: in
-
-- name: Deny Incoming
+- name: Allow Ports
   ufw:
     rule: allow
-    direction: out
-
-- name: Allow SSH
-  ufw:
-    rule: allow
-    port: '22'
+    port: '{{ item }}'
     proto: tcp
-
-- name: Allow HTTPS
-  ufw:
-    rule: allow
-    port: '80'
-    proto: tcp
-
-- name: Allow HTTPS
-  ufw:
-    rule: allow
-    port: '443'
-    proto: tcp
-
+  loop:
+    - '22'
+    - '80'
+    - '443'
