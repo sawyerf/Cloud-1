@@ -10,29 +10,29 @@
     path: '{{ item }}'
     state: directory
   loop:
-    - '/root/{{ ngx_name }}/'
+    - '{{ ngx_path }}'
 
 - name: Copy Configuration file Nginx
   template:
     src: templates/site.conf.j2
-    dest: '/root/{{ ngx_name }}/site.conf'
+    dest: '{{ ngx_path }}/site.conf'
 
 - name: Generate Private key
   openssl_privatekey: 
-    path: '/root/{{ ngx_name }}/{{ domain }}.key'
+    path: '{{ ngx_path }}/{{ domain }}.key'
 
 - name: Generate CSR
   openssl_csr: 
-   path: '/root/{{ ngx_name }}/{{ domain }}.csr'
-   privatekey_path: '/root/{{ ngx_name }}/{{ domain }}.key'
+   path: '{{ ngx_path }}/{{ domain }}.csr'
+   privatekey_path: '{{ ngx_path }}/{{ domain }}.key'
    common_name: '{{ domain }}'
    country_name: FR
 
 - name: Generate a self signed certificate
   openssl_certificate:
-   csr_path: '/root/{{ ngx_name }}/{{ domain }}.csr'
-   path: '/root/{{ ngx_name }}/{{ domain }}.crt'
-   privatekey_path: '/root/{{ ngx_name }}/{{ domain }}.key'
+   csr_path: '{{ ngx_path }}/{{ domain }}.csr'
+   path: '{{ ngx_path }}/{{ domain }}.crt'
+   privatekey_path: '{{ ngx_path }}/{{ domain }}.key'
    provider: selfsigned
 
 - name: Deploy Nginx
@@ -45,7 +45,7 @@
     networks:
       - name: '{{ network_name }}'
     volumes:
-      - '/root/{{ ngx_name }}/site.conf:/etc/nginx/conf.d/default.conf'
-      - '/root/{{ ngx_name }}/{{ domain }}.key:/etc/nginx/{{ domain }}.key'
-      - '/root/{{ ngx_name }}/{{ domain }}.crt:/etc/nginx/{{ domain }}.crt'
+      - '{{ ngx_path }}/site.conf:/etc/nginx/conf.d/default.conf'
+      - '{{ ngx_path }}/{{ domain }}.key:/etc/nginx/{{ domain }}.key'
+      - '{{ ngx_path }}/{{ domain }}.crt:/etc/nginx/{{ domain }}.crt'
     restart_policy: always

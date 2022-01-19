@@ -14,8 +14,13 @@
     ngx_name: Nginx
     network_name: nw_default
 
+    base_path: /root/
+    ngx_path: '{{ base_path }}/{{ ngx_name }}'
+    wp_path: '{{ base_path }}/{{ wp_name }}'
+    sql_path: '{{ base_path }}/{{ sql_name }}'
+
   roles:
-    # - utils
-    # - docker
+    - utils
+    - docker
     - firewall
 ...

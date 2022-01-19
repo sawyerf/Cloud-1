@@ -4,8 +4,8 @@
     path: '{{ item }}'
     state: directory
   loop:
-    - '/root/{{ sql_name }}/config'
-    - '/root/{{ sql_name }}/data'
+    - '{{ sql_path }}/config'
+    - '{{ sql_path }}/data'
 
 - name: Deploy MYSQL
   community.docker.docker_container:
@@ -14,8 +14,8 @@
     networks:
       - name: '{{ network_name }}'
     volumes:
-      - '/root/{{ sql_name }}/config/my.conf:/etc/mysql/conf.d/config-file.cnf'
-      - '/root/{{ sql_name }}/data:/var/lib/mysql:rw'
+      - '{{ sql_path }}/config/my.conf:/etc/mysql/conf.d/config-file.cnf'
+      - '{{ sql_path }}/data:/var/lib/mysql:rw'
     env:
       MYSQL_DATABASE: '{{ db_name }}'
       MYSQL_USER: '{{ db_user }}'

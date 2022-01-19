@@ -4,7 +4,7 @@
     path: '{{ item }}'
     state: directory
   loop:
-    - '/root/{{ wp_name }}/config'
+    - '{{ wp_path }}/config'
 
 - name: Deploy Wordpress
   community.docker.docker_container:
@@ -20,5 +20,5 @@
       WORDPRESS_DB_USER: '{{ db_user }}'
       WORDPRESS_DB_PASSWORD: '{{ db_pass }}'
     volumes:
-      - '/root/{{ wp_name }}/:/var/www/html/'
+      - '{{ wp_path }}/:/var/www/html/'
     restart_policy: always
