@@ -1,12 +1,12 @@
 ---
-- name: Create Folder MySQL
+- name: 'Create Folder {{ wp_name }}'
   file:
     path: '{{ item }}'
     state: directory
   loop:
     - '{{ wp_path }}/config'
 
-- name: Deploy Wordpress
+- name: 'Deploy {{ wp_name }}'
   community.docker.docker_container:
     name: '{{ wp_name }}'
     image: wordpress:latest

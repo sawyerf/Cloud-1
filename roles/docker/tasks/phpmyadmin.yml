@@ -1,5 +1,5 @@
 ---
-- name: Deploy PHPMyAdmin
+- name: 'Deploy {{ pma_name }}'
   community.docker.docker_container:
     name: '{{ pma_name }}'
     image: phpmyadmin
@@ -9,4 +9,5 @@
       - name: '{{ network_name }}'
     env:
       PMA_HOST: '{{ sql_name }}'
+      PMA_ABSOLUTE_URI: 'https://{{ domain }}{{ pma_uri }}/'
     restart_policy: always

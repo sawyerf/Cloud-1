@@ -5,14 +5,14 @@
     state: stopped
     enabled: no
 
-- name: Create Folder Nginx
+- name: 'Create Folder {{ ngx_name }}'
   file:
     path: '{{ item }}'
     state: directory
   loop:
     - '{{ ngx_path }}'
 
-- name: Copy Configuration file Nginx
+- name: 'Copy Configuration file {{ ngx_name }}'
   template:
     src: templates/site.conf.j2
     dest: '{{ ngx_path }}/site.conf'
@@ -35,7 +35,7 @@
    privatekey_path: '{{ ngx_path }}/{{ domain }}.key'
    provider: selfsigned
 
-- name: Deploy Nginx
+- name: 'Deploy {{ ngx_name }}'
   community.docker.docker_container:
     name: '{{ ngx_name }}'
     image: nginx

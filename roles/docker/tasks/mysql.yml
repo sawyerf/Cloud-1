@@ -1,5 +1,5 @@
 ---
-- name: Create Folder MySQL
+- name: 'Create Folder {{ sql_name }}'
   file:
     path: '{{ item }}'
     state: directory
@@ -7,7 +7,7 @@
     - '{{ sql_path }}/config'
     - '{{ sql_path }}/data'
 
-- name: Deploy MYSQL
+- name: 'Deploy {{ sql_name }}'
   community.docker.docker_container:
     name: '{{ sql_name }}'
     image: mysql:latest
