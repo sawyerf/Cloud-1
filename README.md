@@ -17,3 +17,7 @@ docker stop $(docker ps -q)
 ```
 ansible-playbook playbook.yml -i hosts
 ```
+
+```
+docker stop $(docker ps -q); docker rm MySQL  Nginx  PHPMyAdmin  Wordpress ; rm -rf /root/*; echo y | ufw reset
+```

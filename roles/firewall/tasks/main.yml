@@ -2,7 +2,6 @@
 - name: Enabled UFW
   ufw:
     state: enabled
-    # policy: allow
 
 - name: Deny Incoming
   ufw:

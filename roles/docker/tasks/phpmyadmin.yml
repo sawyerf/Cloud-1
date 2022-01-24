@@ -3,8 +3,6 @@
   community.docker.docker_container:
     name: '{{ pma_name }}'
     image: phpmyadmin
-    ports:
-      - 8081:80
     networks:
       - name: '{{ network_name }}'
     env:

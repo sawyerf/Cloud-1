@@ -10,8 +10,6 @@
   community.docker.docker_container:
     name: '{{ wp_name }}'
     image: wordpress:latest
-    ports:
-      - "8080:80"
     networks:
       - name: '{{ network_name }}'
     env:

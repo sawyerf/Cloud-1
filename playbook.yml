@@ -1,30 +1,10 @@
 ---
 - name: Install
-  hosts: web
+  hosts: servers
   remote_user: root
-  vars: 
-    db_name: wp_db
-    db_user: wp_user
-    db_pass: '{{ lookup("env", "DB_PASS") }}'
-
-    domain: cloud.local
-    wp_name: Wordpress
-    pma_name: PHPMyAdmin
-    sql_name: MySQL
-    ngx_name: Nginx
-    network_name: nw_default
-
-    base_path: /root
-    ngx_path: '{{ base_path }}/{{ ngx_name }}'
-    wp_path: '{{ base_path }}/{{ wp_name }}'
-    sql_path: '{{ base_path }}/{{ sql_name }}'
-    pma_path: '{{ base_path }}/{{ pma_name }}'
-
-    pma_uri: '/adminator'
-    wp_uri:  '/'
 
   roles:
-    # - utils
+    - install
+    - firewall
     - docker
-    # - firewall
 ...
