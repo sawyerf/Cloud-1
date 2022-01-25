@@ -3,8 +3,6 @@ db_name: wp_db
 db_user: wp_user
 db_pass: '{{ lookup("env", "DB_PASS") }}'
 
-domain: 42cloud-1.tk
-
 # Docker Name
 wp_name: Wordpress
 pma_name: PHPMyAdmin
