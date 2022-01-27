@@ -2,8 +2,3 @@
 - name: Create Network
   community.docker.docker_network:
     name: '{{ network_name }}'
-
-- include: mysql.yml
-- include: wordpress.yml
-- include: phpmyadmin.yml
-- include: nginx.yml
