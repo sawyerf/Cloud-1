@@ -1,11 +1,4 @@
 ---
-- name: Stop Service Nginx
-  service:
-    name: nginx
-    state: stopped
-    enabled: no
-    only_if_present: yes
-
 - name: 'Create Folder {{ ngx_name }}'
   file:
     path: '{{ item }}'

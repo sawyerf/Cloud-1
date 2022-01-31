@@ -29,3 +29,7 @@ pip3 install --user ansible
 ```
 ansible-galaxy collection install community.docker
 ```
+
+```
+docker inspect -f "{{ .Mounts }}" 190
+```
